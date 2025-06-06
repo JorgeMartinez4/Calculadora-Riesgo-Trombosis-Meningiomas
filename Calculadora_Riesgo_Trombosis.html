@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Riesgo Trombótico en Meningioma</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background: #f7f7f7;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .resultado {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #ecf0f1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Riesgo Trombótico</h1>
+
+  <label for="edad">Edad</label>
+  <input type="number" id="edad" />
+
+  <label for="imc">IMC</label>
+  <input type="number" step="0.1" id="imc" />
+
+  <label for="seno">Invasión de seno venoso</label>
+  <select id="seno">
+    <option value="no">No</option>
+    <option value="si">Sí</option>
+  </select>
+
+  <label for="edema">Edema peritumoral</label>
+  <select id="edema">
+    <option value="no">No</option>
+    <option value="si">Sí</option>
+  </select>
+
+  <label for="corticoides">Uso de corticoides preoperatorios</label>
+  <select id="corticoides">
+    <option value="no">No</option>
+    <option value="si">Sí</option>
+  </select>
+
+  <button onclick="calcularRiesgo()">Calcular Riesgo</button>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    function calcularRiesgo() {
+      let puntos = 0;
+      const edad = parseInt(document.getElementById("edad").value);
+      const imc = parseFloat(document.getElementById("imc").value);
+      const seno = document.getElementById("seno").value;
+      const edema = document.getElementById("edema").value;
+      const corticoides = document.getElementById("corticoides").value;
+
+      if (edad >= 65) puntos++;
+      if (imc >= 30) puntos++;
+      if (seno === "si") puntos++;
+      if (edema === "si") puntos++;
+      if (corticoides === "si") puntos++;
+
+      let categoria = "";
+      if (puntos <= 1) categoria = "Bajo riesgo";
+      else if (puntos <= 3) categoria = "Riesgo intermedio";
+      else categoria = "Alto riesgo";
+
+      document.getElementById("resultado").innerHTML =
+        `<strong>Puntaje total:</strong> ${puntos}/5<br><strong>Categoría de riesgo:</strong> ${categoria}`;
+    }
+  </script>
+</body>
+</html>
